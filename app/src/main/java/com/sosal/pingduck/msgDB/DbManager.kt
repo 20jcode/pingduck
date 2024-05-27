@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 //내부 SQL Lite를 사용하기 위한 DB 클래스
-class DbManager{
+class DbManager {
 
     //TODO : 새로운 메세지 입력하기 (Create)
 
