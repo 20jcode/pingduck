@@ -19,6 +19,10 @@ class MainActivity : AppCompatActivity(){
         CreateMsgBtn = findViewById<Button>(R.id.CreateBtn)
         ViewMsgBtn = findViewById<Button>(R.id.ViewBtn)
 
+        CreateMsgBtn.setOnClickListener {
+            var intent = Intent(this, CreateMsgActivity::class.java)
+            startActivityForResult(intent, 101)
+        }
         ViewMsgBtn.setOnClickListener {
             var intent = Intent(this, MsgViewActivity::class.java)
             startActivityForResult(intent,100)
@@ -30,6 +34,16 @@ class MainActivity : AppCompatActivity(){
         if (requestCode == 100) {
             if (resultCode == Activity.RESULT_CANCELED) {
                 // Do nothing, just return to MainActivity
+            }
+            if (resultCode == Activity.RESULT_OK) {
+                // Handle result from ViewMsgActivity
+            }
+        } else if (requestCode == 101) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Do nothing, just return to MainActivity
+            }
+            if (resultCode == Activity.RESULT_OK) {
+                // Handle result from CreateMsgActivity
             }
         }
     }

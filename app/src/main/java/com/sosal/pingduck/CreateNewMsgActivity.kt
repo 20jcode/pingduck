@@ -1,10 +1,12 @@
 package com.sosal.pingduck
 
+import android.app.Activity
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.chip.ChipGroup
 
 class CreateNewMsgActivity : AppCompatActivity() {
     //생성버튼
@@ -27,6 +29,25 @@ class CreateNewMsgActivity : AppCompatActivity() {
         refrashBtn = findViewById<Button>(R.id.newMsgViewRefrashBtn)
         cancelBtn = findViewById<Button>(R.id.newMsgViewCancelBtn)
 
+        createBtn.setOnClickListener {
+            createMessage()
+        }
+
+        refrashBtn.setOnClickListener {
+            refreshOptions()
+        }
+
+        cancelBtn.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
+
+    private fun createMessage() {
+
+    }
+
+    private fun refreshOptions() {
 
     }
 }
