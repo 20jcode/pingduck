@@ -21,6 +21,12 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
      */
     private var msgCreateTime : String = msgCreateTime;
 
+    /**
+     * 메세지가 평문으로 생성되었는가?
+     */
+    private var isGenerate : Boolean = false;
+
+    private lateinit var generatedMsg : String;
     fun getMsgTarget():String{
         return msgTarget;
     }
@@ -31,6 +37,16 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
 
     fun getMsgCreateTime():String{
         return msgCreateTime
+    }
+
+    fun isGenerated() : Boolean {
+        return isGenerate
+    }
+
+    fun generateMsg(msgData : String) {
+        if(!isGenerate){
+            generatedMsg = msgData;
+        }
     }
 
 }
