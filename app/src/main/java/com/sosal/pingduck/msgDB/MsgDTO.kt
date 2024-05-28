@@ -3,6 +3,14 @@ package com.sosal.pingduck.msgDB
 
 /**
  * 메세지 데이터를 담고 있는 Object
+ *
+ * msgTarget : String
+ *
+ * msgPinkTime : String
+ *
+ * msgCreateTime : String
+ * 
+ * isGenerate : String
  */
 class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
 
