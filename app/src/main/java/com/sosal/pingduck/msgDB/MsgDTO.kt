@@ -7,19 +7,23 @@ package com.sosal.pingduck.msgDB
  *
  * msgPinkTime : String
  *
- * msgCreateTime : DateTime
+ * msgCreateTime : String
  * 
- * isGenerate : String
+ * generatedMsg : String
  */
-class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
+class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy:String) {
 
     /**
      * 핑계 메세지 전송 대상
+     *
+     * 교수님 선배 후배 친구 동료
      */
     private var msgTarget : String = msgTarget;
 
     /**
      * 핑계 댈 시간
+     *
+     * 오늘 내일 다음주 etc
      */
     private var msgPinkTime : String = msgPinkTime;
 
@@ -33,7 +37,17 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
      */
     private var isGenerate : Boolean = false;
 
+    /**
+     * 생성된 메세지 내용
+     *
+     * 교수님 내일 아프다. 못간다요
+     */
     private lateinit var generatedMsg : String;
+
+    /**
+     * 핑계 내용 : 아파서, 그냥, etc
+     */
+    private var msgPinkWhy : String = msgPinkWhy;
 
     /**
      * @return 핑계댈 대상
@@ -57,18 +71,32 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
     }
 
     /**
-     *
+     * @return 메세지가 생성 되었는가?
      */
     fun isGenerated() : Boolean {
         return isGenerate
     }
 
+    /**
+     * @return 핑계 내용 : 아파서, 그냥, 금붕어 산책
+     */
+    fun getMsgPinkWhy():String {
+        return msgPinkWhy
+    }
+
+    /**
+     * @param 생성된 메세지 내용 (교수님 내일 아프다.)
+     */
     fun generateMsg(msgData : String) {
         if(!isGenerate){
+            isGenerate = true
             generatedMsg = msgData;
         }
     }
 
+    /**
+     * @return 생성된 메세지 내용
+     */
     fun getGeneratedMsg() : String {
         if(!isGenerate){
             return generatedMsg
