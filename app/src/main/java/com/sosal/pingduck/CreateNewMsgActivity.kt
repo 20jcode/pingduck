@@ -29,4 +29,6 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
 
     }
+
+
 }
