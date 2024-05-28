@@ -50,4 +50,6 @@ class CreateNewMsgActivity : AppCompatActivity() {
     private fun refreshOptions() {
 
     }
+
+
 }
