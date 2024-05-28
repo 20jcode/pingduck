@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(){
         ViewMsgBtn = findViewById<Button>(R.id.ViewBtn)
 
         CreateMsgBtn.setOnClickListener {
-            var intent = Intent(this, CreateMsgActivity::class.java)
+            var intent = Intent(this, CreateNewMsgActivity::class.java)
             startActivityForResult(intent, 101)
         }
         ViewMsgBtn.setOnClickListener {
