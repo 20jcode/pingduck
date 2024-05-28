@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MsgViewActivity"></activity>
+        <activity android:name=".CreateNewMsgActivity"></activity>
     </application>
 
 </manifest>

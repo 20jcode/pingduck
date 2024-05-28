@@ -17,5 +17,4 @@ class MsgViewActivity : AppCompatActivity() {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
-    }
 }
