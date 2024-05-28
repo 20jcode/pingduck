@@ -17,7 +17,8 @@ class DBHelper(context: Context?, name: String?,
                 "_id integer primary key autoincrement, " +
                 "msgtarget text, " +
                 "msgpinktime text," +
-                "msgcreatetime datetime," +
+                "msgcreatetime text," +
+                "msgpinkwhy text," +
                 "generatedmsg text);"
 
         db.execSQL(sql)
@@ -35,12 +36,14 @@ class DBHelper(context: Context?, name: String?,
             val msgtarget : String = msg.getMsgTarget()
             val msgpinktime : String = msg.getMsgPinkTime()
             val msgcreatetime : String = msg.getMsgCreateTime()
+            val msgpinkwhy : String = msg.getMsgPinkWhy()
             val msgcreatedatas : String = msg.getGeneratedMsg()
 
+
             val sql : String = "INSERT into msgtable (" +
-                    "msgtarget,msgpinktime,msgcreatetime,generatedmsg)" +
+                    "msgtarget,msgpinktime,msgcreatetime,msgpinkwhy,generatedmsg)" +
                     "VALUES" +
-                    "(msgtarget,msgpinktime,msgcreatetime,msgcreatedatas);"
+                    "(msgtarget,msgpinktime,msgcreatetime,msgpinkwhy,msgcreatedatas);"
 
             db.execSQL(sql)
         }
@@ -55,6 +58,7 @@ class DBHelper(context: Context?, name: String?,
         val msgAns : MsgDTO = MsgDTO(cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
             )
 
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
