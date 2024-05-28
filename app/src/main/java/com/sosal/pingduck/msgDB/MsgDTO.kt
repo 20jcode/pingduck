@@ -1,8 +1,5 @@
 package com.sosal.pingduck.msgDB
 
-import java.time.LocalDateTime
-
-
 /**
  * 메세지 데이터를 담고 있는 Object
  *
@@ -14,7 +11,7 @@ import java.time.LocalDateTime
  * 
  * isGenerate : String
  */
-class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:LocalDateTime) {
+class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String) {
 
     /**
      * 핑계 메세지 전송 대상
@@ -29,7 +26,7 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:LocalDateTime) {
     /**
      * 메세지 생성or수정 시간
      */
-    private var msgCreateTime : LocalDateTime = msgCreateTime;
+    private var msgCreateTime : String = msgCreateTime;
 
     /**
      * 메세지가 평문으로 생성되었는가?
@@ -55,7 +52,7 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:LocalDateTime) {
     /**
      * @return 메세지 생성 시간
      */
-    fun getMsgCreateTime():LocalDateTime{
+    fun getMsgCreateTime():String{
         return msgCreateTime
     }
 
@@ -70,6 +67,15 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:LocalDateTime) {
         if(!isGenerate){
             generatedMsg = msgData;
         }
+    }
+
+    fun getGeneratedMsg() : String {
+        if(!isGenerate){
+            return generatedMsg
+        } else {
+            return ""
+        }
+
     }
 
 }
