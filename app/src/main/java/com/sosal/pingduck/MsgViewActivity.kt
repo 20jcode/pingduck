@@ -11,9 +11,9 @@ class MsgViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_msg_view)
-        val cancelButton = findViewById<Button>(R.id.Cancel)
-        cancelButton.setOnClickListener {
+
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
