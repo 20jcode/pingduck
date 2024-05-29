@@ -7,20 +7,20 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import com.sosal.pingduck.databinding.ActivityMainBinding
+import com.sosal.pingduck.databinding.ActivityMsgViewBinding
 
 class MsgViewActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityMainBinding.inflate(layoutInflater)
+        var binding = ActivityMsgViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         setResult(RESULT_CANCELED)
         finish()
-
-        toggle = ActionBarDrawerToggle(this,binding.drawer, "OPEN", "CLOSE")
+        val test1 : String = "test"
+        toggle = ActionBarDrawerToggle(this,binding.drawer,R.string.open_drawer, R.string.open_drawer)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toggle.syncState()
         }
