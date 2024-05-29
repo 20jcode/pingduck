@@ -11,22 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="bottom">
 
         <Button
-            android:id="@+id/Cancel"
+            android:id="@+id/msgViewCancelBtn"
             android:layout_width="466dp"
             android:layout_height="wrap_content"
             android:text="Cancel" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="597dp"
-        android:orientation="vertical">
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="start"
+        android:gravity="center">
         <TextView
-            android:layout_gravity="start"
-            android:gravity="center"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="Drawer"
