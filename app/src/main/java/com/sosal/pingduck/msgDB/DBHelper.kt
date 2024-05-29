@@ -31,7 +31,8 @@ class DBHelper(context: Context?, name: String?,
         onCreate(db)
     }
 
-    fun createMsg(db:SQLiteDatabase,msg : MsgDTO){
+    fun createMsg(msg : MsgDTO){
+        val db : SQLiteDatabase = this.writableDatabase
         if(msg.isGenerated()){
             val msgtarget : String = msg.getMsgTarget()
             val msgpinktime : String = msg.getMsgPinkTime()
@@ -50,7 +51,7 @@ class DBHelper(context: Context?, name: String?,
 
     }
 
-    fun getMsgById(db:SQLiteDatabase,id:Int) : MsgDTO {
+    fun getMsgById(id:Int) : MsgDTO {
         val db = this.readableDatabase
         val selection = "_id = ?"
         val selectionArgs = arrayOf(id.toString())

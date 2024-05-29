@@ -4,12 +4,16 @@ import android.app.Activity
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.sosal.pingduck.msgDB.DBHelper
 import com.sosal.pingduck.msgDB.MsgDTO
+import java.text.SimpleDateFormat
+import java.util.Date
+
 
 class CreateNewMsgActivity : AppCompatActivity() {
     //생성버튼
@@ -48,6 +52,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
         msgPinkTime = findViewById<ChipGroup>(R.id.newMsgViewTimeTextChipGroup)
         msgPinkWhy = findViewById<ChipGroup>(R.id.newMsgViewPinkWhyChipGroup)
 
+
         addChip(msgTarget,"교수님")
         addChip(msgTarget,"선배")
         addChip(msgTarget,"후배")
@@ -73,6 +78,14 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
     private fun createMessage() {
 
+        //모든 옵션이 없을 경우 예외 처리
+
+        val msg : MsgDTO = MsgDTO(getCheckedChipText(msgTarget),getCheckedChipText(msgPinkTime),
+            getTime(),
+            getCheckedChipText(msgPinkWhy))
+
+        dbHelper.createMsg(msg)
+        Log.d("db msg create", "msg 등록")
     }
 
     private fun refreshOptions() {
@@ -85,6 +98,26 @@ class CreateNewMsgActivity : AppCompatActivity() {
             isCloseIconVisible = true
             isCheckable = true
         })
+    }
+
+    /**
+     * Chip 그룹에서 체크된 Chip의 text를 반환한다.
+     *
+     * @param ChipGroup
+     * @return 해당 Chip의 text
+     */
+    private fun getCheckedChipText(chipGroup: ChipGroup) : String {
+        //TODO : 체크된 chip 이 없을 경우 예외 처리
+        val checkedChip : Chip = findViewById<Chip>(chipGroup.checkedChipId)
+
+        return checkedChip.text.toString()
+    }
+
+    private fun getTime() : String {
+        val nowTime : Long = System.currentTimeMillis()
+        val nowDate : Date = Date(nowTime)
+        val dateTime : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        return dateTime.format(nowDate)
     }
 
 
