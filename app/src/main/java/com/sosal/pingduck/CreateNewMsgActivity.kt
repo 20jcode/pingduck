@@ -48,45 +48,14 @@ class CreateNewMsgActivity : AppCompatActivity() {
         msgPinkTime = findViewById<ChipGroup>(R.id.newMsgViewTimeTextChipGroup)
         msgPinkWhy = findViewById<ChipGroup>(R.id.newMsgViewPinkWhyChipGroup)
 
-        //setChipBackgroundColorResource(R.color.teal_200)
-        msgTarget.addView(Chip(this).apply{
-            text = "교수님"
-            isCloseIconVisible = true
-
-        })
-        msgTarget.addView(Chip(this).apply{
-            text = "선배"
-            isCloseIconVisible = true
-        })
-        msgTarget.addView(Chip(this).apply{
-            text = "후배"
-            isCloseIconVisible = true
-        })
-        msgPinkTime.addView(Chip(this).apply{
-            text = "오늘"
-            isCloseIconVisible = true
-
-        })
-        msgPinkTime.addView(Chip(this).apply{
-            text = "다음생에 만남"
-            isCloseIconVisible = true
-
-        })
-        msgPinkWhy.addView(Chip(this).apply{
-            text = "그냥"
-            isCloseIconVisible = true
-
-        })
-        msgPinkWhy.addView(Chip(this).apply{
-            text = "금붕어 산책"
-            isCloseIconVisible = true
-
-        })
-        msgPinkWhy.addView(Chip(this).apply{
-            text = "곤충 채집"
-            isCloseIconVisible = true
-
-        })
+        addChip(msgTarget,"교수님")
+        addChip(msgTarget,"선배")
+        addChip(msgTarget,"후배")
+        addChip(msgPinkTime,"내일")
+        addChip(msgPinkTime,"다음생")
+        addChip(msgPinkWhy,"아픔")
+        addChip(msgPinkWhy,"금붕어산책")
+        addChip(msgPinkWhy,"모기 사냥")
 
         createBtn.setOnClickListener {
             createMessage()
@@ -108,6 +77,14 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
     private fun refreshOptions() {
 
+    }
+
+    private fun addChip(chipGroup: ChipGroup,chipName : String){
+        chipGroup.addView(Chip(this).apply {
+            text = chipName
+            isCloseIconVisible = true
+            isCheckable = true
+        })
     }
 
 
