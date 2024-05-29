@@ -89,7 +89,9 @@ class CreateNewMsgActivity : AppCompatActivity() {
     }
 
     private fun refreshOptions() {
-
+        resetCheckedChip(msgTarget)
+        resetCheckedChip(msgPinkTime)
+        resetCheckedChip(msgPinkWhy)
     }
 
     private fun addChip(chipGroup: ChipGroup,chipName : String){
@@ -118,6 +120,13 @@ class CreateNewMsgActivity : AppCompatActivity() {
         val nowDate : Date = Date(nowTime)
         val dateTime : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         return dateTime.format(nowDate)
+    }
+
+    private fun resetCheckedChip(chipGroup: ChipGroup) {
+        if(chipGroup.checkedChipId != -1){
+            val checkedChip : Chip = findViewById<Chip>(chipGroup.checkedChipId)
+            checkedChip.isChecked = false
+        }
     }
 
 
