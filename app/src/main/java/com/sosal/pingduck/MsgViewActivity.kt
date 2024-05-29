@@ -19,7 +19,9 @@ class MsgViewActivity : AppCompatActivity() {
 
         cancelBtn = findViewById<Button>(R.id.msgViewCancelBtn)
 
+
         toggle = ActionBarDrawerToggle(this,binding.drawer, R.string.open_drawer, R.string.close_drawer)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toggle.syncState()
 
