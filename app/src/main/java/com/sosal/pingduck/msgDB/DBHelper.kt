@@ -26,7 +26,6 @@ class DBHelper(context: Context?, name: String?,
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         val sql : String = "DROP TABLE if exists msgtable"
-
         db.execSQL(sql)
         onCreate(db)
     }
@@ -48,6 +47,7 @@ class DBHelper(context: Context?, name: String?,
 
             db.execSQL(sql)
         }
+        db.close()
 
     }
 
@@ -63,7 +63,8 @@ class DBHelper(context: Context?, name: String?,
             )
 
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
-
+        cursor.close()
+        db.close()
         return msgAns
 
     }
@@ -73,8 +74,34 @@ class DBHelper(context: Context?, name: String?,
      * 생성된 핑계 메세지 정보를 조회
      * @return MsgDTO
      */
-    //fun getMsgList() : MutableList<MsgDTO> {
+    fun getMsgList() : MutableList<MsgDTO> {
+        val rList : MutableList<MsgDTO> = ArrayList()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM msgtable"
+        val cur : Cursor = db.rawQuery(query,null)
 
-    //}
+        if(cur.moveToFirst()){
+            do {
+                val msgDto = makeCursorToMsgDTO(cur)
+                rList.add(msgDto)
+            } while (cur.moveToNext())
+        }
+
+        cur.close()
+        db.close()
+        return rList
+    }
+
+    private fun makeCursorToMsgDTO(cursor: Cursor) : MsgDTO{
+        val msgAns : MsgDTO = MsgDTO(cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
+        )
+
+        msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
+
+        return msgAns
+    }
 
 }
