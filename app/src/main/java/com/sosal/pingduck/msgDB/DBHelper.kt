@@ -5,12 +5,28 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.time.LocalDateTime
 
-class DBHelper(context: Context?, name: String?,
-               factory : SQLiteDatabase.CursorFactory?,
-               version: Int) : SQLiteOpenHelper(context, name, factory, version) {
+/*
 
+DB 제어와 관련된 소스코드
+
+getReadableDatabase() : 읽기 전용 DB 객체 반환
+
+getWriteableDatabase() : 쓰기 전용
+
+onCreate() : 데이터베이스 생성 시 작업 구현
+
+onOpen() : 생성된 데이터베이스 오픈 시 작업 구현
+
+onUpgrade() : 데이터베이스 수정 시 작업 구현
+
+ */
+
+class DBHelper(context: Context?, name: String?="msgdb",
+               factory : SQLiteDatabase.CursorFactory?=null,
+               version: Int=2) : SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase) {
         val sql : String = "CREATE TABLE if not exists msgtable (" +
@@ -22,6 +38,7 @@ class DBHelper(context: Context?, name: String?,
                 "generatedmsg text);"
 
         db.execSQL(sql)
+        Log.d("DB","create table ok")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -32,25 +49,31 @@ class DBHelper(context: Context?, name: String?,
 
     fun createMsg(msg : MsgDTO){
         val db : SQLiteDatabase = this.writableDatabase
+
         val msgData: String = "${msg.getMsgTarget()}, ${msg.getMsgPinkTime()}에 ${msg.getMsgPinkWhy()} 이유로 못간다."
         msg.generateMsg(msgData)
 
         if(msg.isGenerated()){
-            val msgtarget : String = msg.getMsgTarget()
-            val msgpinktime : String = msg.getMsgPinkTime()
-            val msgcreatetime : String = msg.getMsgCreateTime()
-            val msgpinkwhy : String = msg.getMsgPinkWhy()
-            val msgcreatedatas : String = msg.getGeneratedMsg()
 
+            //Table 이름 : value를 가지는 ContentValues 객체 생성
+            val contentValue = ContentValues()
+            contentValue.put("msgtarget",msg.getMsgTarget())
+            contentValue.put("msgpinktime",msg.getMsgPinkTime())
+            contentValue.put("msgcreatetime",msg.getMsgCreateTime())
+            contentValue.put("msgpinkwhy",msg.getMsgPinkWhy())
+            contentValue.put("generatedmsg",msg.getGeneratedMsg())
 
-            val sql : String = "INSERT into msgtable (" +
-                    "msgtarget,msgpinktime,msgcreatetime,msgpinkwhy,generatedmsg)" +
-                    "VALUES" +
-                    "(msgtarget,msgpinktime,msgcreatetime,msgpinkwhy,msgcreatedatas);"
-
-            db.execSQL(sql)
+            //insert 구문 실행
+            val ansValue = db.insert("msgtable",null,contentValue)
+            if(ansValue>-1){
+                Log.d("DB","createMsg, id : ${ansValue}")
+            } else {
+                //db insert가 실패하였을 경우 ansValue는 -1을 가진다.
+                Log.e("DB","createMsg error")
+            }
         }
         db.close()
+
 
     }
 
@@ -69,6 +92,7 @@ class DBHelper(context: Context?, name: String?,
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
         cursor.close()
         db.close()
+        Log.d("DB","getMsgById")
         return msgAns
 
     }
@@ -94,11 +118,13 @@ class DBHelper(context: Context?, name: String?,
 
         cur.close()
         db.close()
+        Log.d("DB","getMsgList")
         return rList
     }
 
-    private fun makeCursorToMsgDTO(cursor: Cursor) : MsgDTO{
-        val msgAns : MsgDTO = MsgDTO(cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
+    private fun makeCursorToMsgDTO(cursor: Cursor) : MsgDTO {
+        val msgAns: MsgDTO = MsgDTO(
+            cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
@@ -107,29 +133,6 @@ class DBHelper(context: Context?, name: String?,
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
 
         return msgAns
-
-        val msgList: MutableList<MsgDTO> = mutableListOf()
-        val db = this.readableDatabase
-        val cursor: Cursor = db.query("msgtable", null, null, null, null, null, null)
-
-        if(cursor.moveToFirst()) {
-            do {
-                val msgTarget = cursor.getString(cursor.getColumnIndexOrThrow("msgtarget"))
-                val msgPinkTime = cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime"))
-                val msgCreateTime = cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime"))
-                val msgPinkWhy = cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
-                //val generatedMsg = cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg"))
-                val msgData: String = "${msgTarget}, ${msgPinkTime}에 ${msgPinkWhy} 이유로 못간다."
-
-                val msgDTO = MsgDTO(msgTarget, msgPinkTime, msgCreateTime, msgPinkWhy)
-                msgDTO.generateMsg(msgData)
-
-                msgList.add(msgDTO)
-            } while(cursor.moveToNext())
-        }
-        cursor.close()
-        return msgList
-
     }
 
 }

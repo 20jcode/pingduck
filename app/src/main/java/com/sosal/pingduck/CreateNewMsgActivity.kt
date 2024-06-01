@@ -36,7 +36,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dbHelper = DBHelper(this,"msgtest.db",null,1)
+        dbHelper = DBHelper(this)
 
         //view binding
         setContentView(R.layout.activity_new_msg)
