@@ -32,6 +32,9 @@ class DBHelper(context: Context?, name: String?,
 
     fun createMsg(msg : MsgDTO){
         val db : SQLiteDatabase = this.writableDatabase
+        val msgData: String = "${msg.getMsgTarget()}, ${msg.getMsgPinkTime()}에 ${msg.getMsgPinkWhy()} 이유로 못간다."
+        msg.generateMsg(msgData)
+
         if(msg.isGenerated()){
             val msgtarget : String = msg.getMsgTarget()
             val msgpinktime : String = msg.getMsgPinkTime()
@@ -56,11 +59,12 @@ class DBHelper(context: Context?, name: String?,
         val selection = "_id = ?"
         val selectionArgs = arrayOf(id.toString())
         val cursor : Cursor = db.query("msgtable",null,selection,selectionArgs,null,null,null)
-        val msgAns : MsgDTO = MsgDTO(cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
+        val msgAns : MsgDTO = MsgDTO(cursor.getString(
+            cursor.getColumnIndexOrThrow("msgtarget")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
-            )
+        )
 
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
         cursor.close()
@@ -75,6 +79,7 @@ class DBHelper(context: Context?, name: String?,
      * @return MsgDTO
      */
     fun getMsgList() : MutableList<MsgDTO> {
+
         val rList : MutableList<MsgDTO> = ArrayList()
         val db = this.readableDatabase
         val query = "SELECT * FROM msgtable"
@@ -102,6 +107,29 @@ class DBHelper(context: Context?, name: String?,
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
 
         return msgAns
+
+        val msgList: MutableList<MsgDTO> = mutableListOf()
+        val db = this.readableDatabase
+        val cursor: Cursor = db.query("msgtable", null, null, null, null, null, null)
+
+        if(cursor.moveToFirst()) {
+            do {
+                val msgTarget = cursor.getString(cursor.getColumnIndexOrThrow("msgtarget"))
+                val msgPinkTime = cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime"))
+                val msgCreateTime = cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime"))
+                val msgPinkWhy = cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
+                //val generatedMsg = cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg"))
+                val msgData: String = "${msgTarget}, ${msgPinkTime}에 ${msgPinkWhy} 이유로 못간다."
+
+                val msgDTO = MsgDTO(msgTarget, msgPinkTime, msgCreateTime, msgPinkWhy)
+                msgDTO.generateMsg(msgData)
+
+                msgList.add(msgDTO)
+            } while(cursor.moveToNext())
+        }
+        cursor.close()
+        return msgList
+
     }
 
 }
