@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -63,7 +64,12 @@ class CreateNewMsgActivity : AppCompatActivity() {
         addChip(msgPinkWhy,"모기 사냥")
 
         createBtn.setOnClickListener {
-            createMessage()
+            try {
+                createMessage()
+            } catch (e:Exception){
+                Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         refrashBtn.setOnClickListener {
@@ -110,9 +116,15 @@ class CreateNewMsgActivity : AppCompatActivity() {
      */
     private fun getCheckedChipText(chipGroup: ChipGroup) : String {
         //TODO : 체크된 chip 이 없을 경우 예외 처리
-        val checkedChip : Chip = findViewById<Chip>(chipGroup.checkedChipId)
+        val checkedChip : Chip? = findViewById<Chip>(chipGroup.checkedChipId)
 
-        return checkedChip.text.toString()
+        if(checkedChip == null){
+            throw Exception("핑계 생성 옵션을 선택해주세요.")
+        } else {
+            return checkedChip.text.toString()
+        }
+
+
     }
 
     private fun getTime() : String {
