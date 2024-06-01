@@ -14,6 +14,10 @@ package com.sosal.pingduck.msgDB
 class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy:String) {
 
     /**
+     * db pk, 디비에 반영되어있지 않은 경우 -1
+     */
+    private var id : Int = -1
+    /**
      * 핑계 메세지 전송 대상
      *
      * 교수님 선배 후배 친구 동료
@@ -104,6 +108,15 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy
             return ""
         }
 
+    }
+    fun setId(id:Int) {
+        if(id>0){
+            this.id = id
+        }
+
+    }
+    fun getId() : Int {
+        return id
     }
 
 }
