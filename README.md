@@ -29,3 +29,4 @@ https://wireframe.cc/utrLof
 
 https://wireframe.cc/VvzMpd
 
+![pinkduck.drawio (3).png](..%2F..%2FDownloads%2Fpinkduck.drawio%20%283%29.png)
