@@ -26,7 +26,6 @@ class DBHelper(context: Context?, name: String?,
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         val sql : String = "DROP TABLE if exists msgtable"
-
         db.execSQL(sql)
         onCreate(db)
     }
@@ -51,6 +50,7 @@ class DBHelper(context: Context?, name: String?,
 
             db.execSQL(sql)
         }
+        db.close()
 
     }
 
@@ -67,7 +67,8 @@ class DBHelper(context: Context?, name: String?,
         )
 
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
-
+        cursor.close()
+        db.close()
         return msgAns
 
     }
@@ -78,6 +79,35 @@ class DBHelper(context: Context?, name: String?,
      * @return MsgDTO
      */
     fun getMsgList() : MutableList<MsgDTO> {
+
+        val rList : MutableList<MsgDTO> = ArrayList()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM msgtable"
+        val cur : Cursor = db.rawQuery(query,null)
+
+        if(cur.moveToFirst()){
+            do {
+                val msgDto = makeCursorToMsgDTO(cur)
+                rList.add(msgDto)
+            } while (cur.moveToNext())
+        }
+
+        cur.close()
+        db.close()
+        return rList
+    }
+
+    private fun makeCursorToMsgDTO(cursor: Cursor) : MsgDTO{
+        val msgAns : MsgDTO = MsgDTO(cursor.getString(cursor.getColumnIndexOrThrow("msgtarget")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
+            cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
+        )
+
+        msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
+
+        return msgAns
+
         val msgList: MutableList<MsgDTO> = mutableListOf()
         val db = this.readableDatabase
         val cursor: Cursor = db.query("msgtable", null, null, null, null, null, null)
@@ -99,6 +129,7 @@ class DBHelper(context: Context?, name: String?,
         }
         cursor.close()
         return msgList
+
     }
 
 }
