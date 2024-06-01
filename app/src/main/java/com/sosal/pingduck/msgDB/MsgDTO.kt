@@ -89,7 +89,7 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy
     }
 
     /**
-     * @param 생성된 메세지 내용 (교수님 내일 아프다.)
+     * @param msgData 생성된 메세지
      */
     fun generateMsg(msgData : String) {
         if(!isGenerate){
@@ -102,10 +102,10 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy
      * @return 생성된 메세지 내용
      */
     fun getGeneratedMsg() : String {
-        if(!isGenerate){
+        if(isGenerate){
             return generatedMsg
         } else {
-            return ""
+            throw IllegalArgumentException("생성된 메세지가 없습니다.")
         }
 
     }

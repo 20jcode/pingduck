@@ -50,9 +50,6 @@ class DBHelper(context: Context?, name: String?="msgdb",
     fun createMsg(msg : MsgDTO){
         val db : SQLiteDatabase = this.writableDatabase
 
-        val msgData: String = "${msg.getMsgTarget()}, ${msg.getMsgPinkTime()}에 ${msg.getMsgPinkWhy()} 이유로 못간다."
-        msg.generateMsg(msgData)
-
         if(msg.isGenerated()){
 
             //Table 이름 : value를 가지는 ContentValues 객체 생성

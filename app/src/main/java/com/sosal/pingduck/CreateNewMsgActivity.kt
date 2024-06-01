@@ -24,15 +24,16 @@ class CreateNewMsgActivity : AppCompatActivity() {
     //취소
     lateinit var cancelBtn : Button
 
+    //ChipGroup
     lateinit var msgTarget: ChipGroup
-
     lateinit var msgPinkTime : ChipGroup
-
     lateinit var msgPinkWhy : ChipGroup
 
     //DB 객체 선언
-    lateinit var database : SQLiteDatabase
     lateinit var dbHelper : DBHelper
+
+    //msgGenerator
+    lateinit var msgGenerator: MsgGenerator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,8 @@ class CreateNewMsgActivity : AppCompatActivity() {
         msgPinkTime = findViewById<ChipGroup>(R.id.newMsgViewTimeTextChipGroup)
         msgPinkWhy = findViewById<ChipGroup>(R.id.newMsgViewPinkWhyChipGroup)
 
+        //msgGenerator
+        msgGenerator = MsgGenerator()
 
         addChip(msgTarget,"교수님")
         addChip(msgTarget,"선배")
@@ -65,9 +68,18 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
         createBtn.setOnClickListener {
             try {
+                //ChipGroup에서 메세지 옵션 선택
                 createMessage()
-            } catch (e:Exception){
+
+                Toast.makeText(this,"메세지가 생성되었습니다.",Toast.LENGTH_SHORT).show()
+                setResult(Activity.RESULT_OK)
+                finish()
+            } catch (e:IllegalArgumentException){ //메세지 옵션이 선택되지 않은 경우에 대해서
+                Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+                refreshOptions()
+            } catch (e:IllegalAccessException){ //이미 메세지가 생성되었다면
                 Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+                refreshOptions()
             }
 
         }
@@ -84,14 +96,15 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
     private fun createMessage() {
 
-        //모든 옵션이 없을 경우 예외 처리
-
         val msg : MsgDTO = MsgDTO(getCheckedChipText(msgTarget),getCheckedChipText(msgPinkTime),
             getTime(),
             getCheckedChipText(msgPinkWhy))
 
+        msg.generateMsg(msgGenerator.generate(msg))
+
         dbHelper.createMsg(msg)
-        Log.d("db msg create", "msg 등록")
+
+        Log.d("db msg create", "msg 등록 : ${msg.getGeneratedMsg()}")
     }
 
     private fun refreshOptions() {
@@ -115,11 +128,11 @@ class CreateNewMsgActivity : AppCompatActivity() {
      * @return 해당 Chip의 text
      */
     private fun getCheckedChipText(chipGroup: ChipGroup) : String {
-        //TODO : 체크된 chip 이 없을 경우 예외 처리
+
         val checkedChip : Chip? = findViewById<Chip>(chipGroup.checkedChipId)
 
         if(checkedChip == null){
-            throw Exception("핑계 생성 옵션을 선택해주세요.")
+            throw IllegalArgumentException("핑계 생성 옵션을 선택해주세요.")
         } else {
             return checkedChip.text.toString()
         }
@@ -127,6 +140,9 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * 현재 시간을 String으로
+     */
     private fun getTime() : String {
         val nowTime : Long = System.currentTimeMillis()
         val nowDate : Date = Date(nowTime)
