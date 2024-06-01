@@ -13,9 +13,18 @@
         android:orientation="vertical"
         android:gravity="bottom">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/msgRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_msg" />
         <Button
             android:id="@+id/msgViewCancelBtn"
-            android:layout_width="466dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancel" />
     </LinearLayout>
@@ -26,13 +35,16 @@
         android:orientation="vertical"
         android:layout_gravity="start"
         android:gravity="center">
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="Drawer"
-            android:background="@color/purple_200">
-
-        </TextView>
+        <Button
+            android:id="@+id/sortByDateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜순" />
+        <Button
+            android:id="@+id/sortByTargetBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대상순" />
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
