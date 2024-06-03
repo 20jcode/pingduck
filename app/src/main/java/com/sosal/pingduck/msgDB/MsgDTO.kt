@@ -109,9 +109,9 @@ class MsgDTO(msgTarget:String,msgPinkTime:String,msgCreateTime:String,msgPinkWhy
         }
 
     }
-    fun setId(id:Int) {
-        if(id>=0){
-            this.id = id
+    fun setId(inputId:Int) {
+        if(inputId>=0){
+            id = inputId
         }
 
     }

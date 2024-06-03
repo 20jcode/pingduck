@@ -10,6 +10,7 @@ import com.sosal.pingduck.databinding.ActivityMsgViewBinding
 import com.sosal.pingduck.msgDB.DBHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sosal.pingduck.common.MsgAdapter
+import com.sosal.pingduck.msgDB.MsgDTO
 
 class MsgViewActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -27,9 +28,10 @@ class MsgViewActivity : AppCompatActivity() {
         val recyclerView = binding.msgRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         msgAdapter = MsgAdapter(dbHelper.getMsgList()){
-            id ->
+            msg ->
             var intent = Intent(this,MsgLookUpActivity::class.java)
-            intent.putExtra("id",id.toString())
+            intent.putExtra("data",msg.getGeneratedMsg())
+
             startActivityForResult(intent,100)
         }
         recyclerView.adapter = msgAdapter
