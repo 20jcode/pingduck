@@ -23,11 +23,11 @@ class MsgAdapter(val msgList: List<MsgDTO>) : RecyclerView.Adapter<MsgAdapter.Ms
 
     override fun onBindViewHolder(holder: MsgViewHolder, position: Int) {
         val msg = msgList[position]
-        holder.textMsgTarget.text = "Target: ${msg.getMsgTarget()}"
-        holder.textMsgPinkTime.text = "Pink time: ${msg.getMsgPinkTime()}"
-        holder.textMsgCreateTime.text = "Create Time: ${msg.getMsgCreateTime()}"
-        holder.textMsgPinkWhy.text = "Pink Why: ${msg.getMsgPinkWhy()}"
-        holder.textGeneratedMsg.text = "Generated Msg: ${msg.getGeneratedMsg()}"
+        holder.textMsgTarget.text = "Target: " + msg.getMsgTarget()
+        holder.textMsgPinkTime.text = "Pink time: " + msg.getMsgPinkTime()
+        holder.textMsgCreateTime.text = "Create Time: " + msg.getMsgCreateTime()
+        holder.textMsgPinkWhy.text = "Pink Why: " + msg.getMsgPinkWhy()
+        holder.textGeneratedMsg.text = "Generated Msg: " + msg.getGeneratedMsg()
     }
 
     override fun getItemCount(): Int {
