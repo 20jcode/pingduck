@@ -1,15 +1,14 @@
 package com.sosal.pingduck
 
 import android.app.Activity
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.sosal.pingduck.common.MsgGenerator
 import com.sosal.pingduck.msgDB.DBHelper
 import com.sosal.pingduck.msgDB.MsgDTO
 import java.text.SimpleDateFormat

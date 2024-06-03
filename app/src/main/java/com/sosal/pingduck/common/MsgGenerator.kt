@@ -1,4 +1,4 @@
-package com.sosal.pingduck
+package com.sosal.pingduck.common
 
 import com.sosal.pingduck.msgDB.MsgDTO
 
