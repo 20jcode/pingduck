@@ -26,11 +26,11 @@ onUpgrade() : 데이터베이스 수정 시 작업 구현
 
 class DBHelper(context: Context?, name: String?="msgdb",
                factory : SQLiteDatabase.CursorFactory?=null,
-               version: Int=2) : SQLiteOpenHelper(context, name, factory, version) {
+               version: Int=3) : SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase) {
         val sql : String = "CREATE TABLE if not exists msgtable (" +
-                "_id integer primary key autoincrement, " +
+                "id integer primary key autoincrement, " +
                 "msgtarget text, " +
                 "msgpinktime text," +
                 "msgcreatetime text," +
@@ -63,7 +63,7 @@ class DBHelper(context: Context?, name: String?="msgdb",
             //insert 구문 실행
             val ansValue = db.insert("msgtable",null,contentValue)
             if(ansValue>-1){
-                Log.d("DB","createMsg, id : ${ansValue}")
+                Log.d("DB","createMsg, col : ${ansValue}")
             } else {
                 //db insert가 실패하였을 경우 ansValue는 -1을 가진다.
                 Log.e("DB","createMsg error")
@@ -76,7 +76,7 @@ class DBHelper(context: Context?, name: String?="msgdb",
 
     fun getMsgById(id:Int) : MsgDTO {
         val db = this.readableDatabase
-        val selection = "_id = ?"
+        val selection = "id = ?"
         val selectionArgs = arrayOf(id.toString())
         val cursor : Cursor = db.query("msgtable",null,selection,selectionArgs,null,null,null)
         val msgAns : MsgDTO = MsgDTO(cursor.getString(
@@ -126,9 +126,9 @@ class DBHelper(context: Context?, name: String?="msgdb",
             cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
         )
-
+        msgAns.setId(cursor.getColumnIndexOrThrow("id"))
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
-
+        Log.d("DB","id : ${msgAns.getId()}, data : ${msgAns.getGeneratedMsg()}")
         return msgAns
     }
 

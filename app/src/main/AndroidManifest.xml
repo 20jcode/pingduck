@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".MsgViewActivity"></activity>
         <activity android:name=".CreateNewMsgActivity"></activity>
+        <activity android:name=".MsgLookUpActivity"></activity>
     </application>
 
 </manifest>
