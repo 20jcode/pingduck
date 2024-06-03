@@ -1,6 +1,7 @@
 package com.sosal.pingduck
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,7 +26,12 @@ class MsgViewActivity : AppCompatActivity() {
         // RecyclerView 설정
         val recyclerView = binding.msgRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        msgAdapter = MsgAdapter(dbHelper.getMsgList())
+        msgAdapter = MsgAdapter(dbHelper.getMsgList()){
+            id ->
+            var intent = Intent(this,MsgLookUpActivity::class.java)
+            intent.putExtra("id",id.toString())
+            startActivityForResult(intent,100)
+        }
         recyclerView.adapter = msgAdapter
 
 
