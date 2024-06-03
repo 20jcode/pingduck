@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(){
         }
         ViewMsgBtn.setOnClickListener {
             var intent = Intent(this, MsgViewActivity::class.java)
+
             startActivityForResult(intent,100)
         }
     }

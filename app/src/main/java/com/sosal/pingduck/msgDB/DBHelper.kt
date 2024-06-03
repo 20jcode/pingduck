@@ -26,11 +26,11 @@ onUpgrade() : 데이터베이스 수정 시 작업 구현
 
 class DBHelper(context: Context?, name: String?="msgdb",
                factory : SQLiteDatabase.CursorFactory?=null,
-               version: Int=3) : SQLiteOpenHelper(context, name, factory, version) {
+               version: Int=6) : SQLiteOpenHelper(context, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase) {
         val sql : String = "CREATE TABLE if not exists msgtable (" +
-                "id integer primary key autoincrement, " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "msgtarget text, " +
                 "msgpinktime text," +
                 "msgcreatetime text," +
@@ -49,7 +49,6 @@ class DBHelper(context: Context?, name: String?="msgdb",
 
     fun createMsg(msg : MsgDTO){
         val db : SQLiteDatabase = this.writableDatabase
-
         if(msg.isGenerated()){
 
             //Table 이름 : value를 가지는 ContentValues 객체 생성
@@ -64,6 +63,7 @@ class DBHelper(context: Context?, name: String?="msgdb",
             val ansValue = db.insert("msgtable",null,contentValue)
             if(ansValue>-1){
                 Log.d("DB","createMsg, col : ${ansValue}")
+
             } else {
                 //db insert가 실패하였을 경우 ansValue는 -1을 가진다.
                 Log.e("DB","createMsg error")
@@ -73,12 +73,14 @@ class DBHelper(context: Context?, name: String?="msgdb",
 
 
     }
-
+    /*
     fun getMsgById(id:Int) : MsgDTO {
         val db = this.readableDatabase
-        val selection = "id = ?"
-        val selectionArgs = arrayOf(id.toString())
-        val cursor : Cursor = db.query("msgtable",null,selection,selectionArgs,null,null,null)
+        //val selection = "ID = ?"
+        //val selectionArgs = arrayOf(id.toString())
+        val cursor = db.rawQuery("SELECT * FROM msgtable WHERE rowid = ${id};",null)
+        Log.d("DB",cursor.getColumnName(0))
+        //val cursor : Cursor = db.query("msgtable",null,selection,selectionArgs,null,null,null)
         val msgAns : MsgDTO = MsgDTO(cursor.getString(
             cursor.getColumnIndexOrThrow("msgtarget")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinktime")),
@@ -95,6 +97,8 @@ class DBHelper(context: Context?, name: String?="msgdb",
     }
 
 
+
+     */
     /**
      * 생성된 핑계 메세지 정보를 조회
      * @return MsgDTO
@@ -126,7 +130,8 @@ class DBHelper(context: Context?, name: String?="msgdb",
             cursor.getString(cursor.getColumnIndexOrThrow("msgcreatetime")),
             cursor.getString(cursor.getColumnIndexOrThrow("msgpinkwhy"))
         )
-        msgAns.setId(cursor.getColumnIndexOrThrow("id"))
+        msgAns.setId(cursor.position)
+        //msgAns.setId(cursor.getColumnIndexOrThrow("rowid"))
         msgAns.generateMsg(cursor.getString(cursor.getColumnIndexOrThrow("generatedmsg")))
         Log.d("DB","id : ${msgAns.getId()}, data : ${msgAns.getGeneratedMsg()}")
         return msgAns

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sosal.pingduck.R
 import com.sosal.pingduck.msgDB.MsgDTO
 
-class MsgAdapter(val msgList: List<MsgDTO>, val onClick: (Int)->(Unit)) : RecyclerView.Adapter<MsgAdapter.MsgViewHolder>() {
+class MsgAdapter(val msgList: List<MsgDTO>, val onClick: (MsgDTO)->(Unit)) : RecyclerView.Adapter<MsgAdapter.MsgViewHolder>() {
 
     //클릭 이벤트 처리
     private lateinit var itemClickListener : OnItemClickListener
@@ -21,9 +21,9 @@ class MsgAdapter(val msgList: List<MsgDTO>, val onClick: (Int)->(Unit)) : Recycl
         val textMsgPinkWhy: TextView = itemView.findViewById(R.id.textMsgPinkWhy)
         val textGeneratedMsg: TextView = itemView.findViewById(R.id.textGeneratedMsg)
 
-        fun bind(id : Int){
+        fun bind(msg : MsgDTO){
             itemView.setOnClickListener{
-                onClick(id)
+                onClick(msg)
             }
         }
     }
@@ -40,7 +40,7 @@ class MsgAdapter(val msgList: List<MsgDTO>, val onClick: (Int)->(Unit)) : Recycl
         holder.textMsgCreateTime.text = "Create Time: ${msg.getMsgCreateTime()}"
         holder.textMsgPinkWhy.text = "Pink Why: ${msg.getMsgPinkWhy()}"
         holder.textGeneratedMsg.text = "Generated Msg: ${msg.getGeneratedMsg()}"
-        holder.bind(msg.getId())
+        holder.bind(msg)
     }
 
     override fun getItemCount(): Int {
