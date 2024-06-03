@@ -1,15 +1,14 @@
 package com.sosal.pingduck
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.sosal.pingduck.databinding.ActivityMsgViewBinding
 import com.sosal.pingduck.msgDB.DBHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sosal.pingduck.common.MsgAdapter
 
 class MsgViewActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -28,6 +27,7 @@ class MsgViewActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         msgAdapter = MsgAdapter(dbHelper.getMsgList())
         recyclerView.adapter = msgAdapter
+
 
         // Toggle 설정
         toggle = ActionBarDrawerToggle(this,binding.drawer, R.string.open_drawer, R.string.close_drawer)
