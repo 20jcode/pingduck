@@ -21,7 +21,7 @@ class MsgViewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // DBHelper 초기화
-        dbHelper = DBHelper(this, "msgDB", null, 1)
+        dbHelper = DBHelper(this)
 
         // RecyclerView 설정
         val recyclerView = binding.msgRecyclerView
