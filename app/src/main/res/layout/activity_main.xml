@@ -20,9 +20,9 @@
 
         <Button
             android:id="@+id/CreateBtn"
-            android:layout_width="197dp"
+            android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:text="Create New Message" />
+            android:text="새 메시지 생성" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +35,7 @@
             android:id="@+id/ViewBtn"
             android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:text="View Existing Messages" />
+            android:text="생성된 메시지 보기" />
     </LinearLayout>
 
 </LinearLayout>

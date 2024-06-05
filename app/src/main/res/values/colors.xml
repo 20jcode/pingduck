@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pink_duck">#FFC0CB</color>
+    <color name="pink_duck_dark">#FF69B4</color>
+    <color name="pink_duck_light">#FFD1DC</color>
+    <color name="yellow_beak">#FFFF66</color>
+    <color name="yellow_beak_dark">#FFD700</color>
 </resources>
