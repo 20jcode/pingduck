@@ -34,7 +34,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="start"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="#FFCCCCCC">
         <Button
             android:id="@+id/sortByDateBtn"
             android:layout_width="wrap_content"
