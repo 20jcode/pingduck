@@ -15,15 +15,24 @@
 
         <Button
             android:id="@+id/CreateBtn"
-            android:layout_width="197dp"
+            android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:text="Create New Message" />
+            android:text="새 메시지 생성" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="295dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
 
         <Button
             android:id="@+id/ViewBtn"
             android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:text="View Existing Messages" />
+
+            android:text="생성된 메시지 보기" />
 
     </LinearLayout>
 
