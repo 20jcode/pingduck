@@ -115,8 +115,9 @@ class CreateNewMsgActivity : AppCompatActivity() {
     private fun addChip(chipGroup: ChipGroup,chipName : String){
         chipGroup.addView(Chip(this).apply {
             text = chipName
-            isCloseIconVisible = true
+            isCloseIconVisible = false
             isCheckable = true
+
         })
     }
 
