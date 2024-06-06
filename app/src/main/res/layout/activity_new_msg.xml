@@ -30,6 +30,16 @@
                 app:singleSelection="true">
 
             </com.google.android.material.chip.ChipGroup>
+        <EditText
+            android:id="@+id/newMsgTargetInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="새 대상 입력"/>
+        <Button
+            android:id="@+id/addTargetChipBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대상 추가"/>
         </LinearLayout>
 
         <LinearLayout
@@ -50,6 +60,17 @@
                 app:singleSelection="true">
 
             </com.google.android.material.chip.ChipGroup>
+            <EditText
+                android:id="@+id/newMsgTimeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="새 일시 입력" />
+
+            <Button
+                android:id="@+id/addTimeChipBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일시 추가" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,6 +93,17 @@
 
 
             </com.google.android.material.chip.ChipGroup>
+            <EditText
+                android:id="@+id/newMsgReasonInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="새 핑계 입력" />
+
+            <Button
+                android:id="@+id/addReasonChipBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="핑계 추가" />
         </LinearLayout>
 
         <LinearLayout
