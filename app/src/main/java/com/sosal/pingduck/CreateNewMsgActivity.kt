@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
@@ -34,6 +35,12 @@ class CreateNewMsgActivity : AppCompatActivity() {
     //msgGenerator
     lateinit var msgGenerator: MsgGenerator
 
+    lateinit var newMsgTargetInput: EditText
+    lateinit var addTargetChipBtn: Button
+    lateinit var newMsgTimeInput: EditText
+    lateinit var addTimeChipBtn: Button
+    lateinit var newMsgReasonInput: EditText
+    lateinit var addReasonChipBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +59,14 @@ class CreateNewMsgActivity : AppCompatActivity() {
         msgTarget = findViewById<ChipGroup>(R.id.newMsgViewFocusTargetChipGroup)
         msgPinkTime = findViewById<ChipGroup>(R.id.newMsgViewTimeTextChipGroup)
         msgPinkWhy = findViewById<ChipGroup>(R.id.newMsgViewPinkWhyChipGroup)
+
+        //Input fields and buttons
+        newMsgTargetInput = findViewById<EditText>(R.id.newMsgTargetInput)
+        addTargetChipBtn = findViewById<Button>(R.id.addTargetChipBtn)
+        newMsgTimeInput = findViewById<EditText>(R.id.newMsgTimeInput)
+        addTimeChipBtn = findViewById<Button>(R.id.addTimeChipBtn)
+        newMsgReasonInput = findViewById<EditText>(R.id.newMsgReasonInput)
+        addReasonChipBtn = findViewById<Button>(R.id.addReasonChipBtn)
 
         //msgGenerator
         msgGenerator = MsgGenerator()
@@ -90,6 +105,27 @@ class CreateNewMsgActivity : AppCompatActivity() {
         cancelBtn.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
             finish()
+        }
+        addTargetChipBtn.setOnClickListener {
+            val chipText = newMsgTargetInput.text.toString().trim()
+            if (chipText.isNotEmpty()) {
+                addChip(msgTarget, chipText)
+                newMsgTargetInput.text.clear()
+            }
+        }
+        addTimeChipBtn.setOnClickListener {
+            val chipText = newMsgTimeInput.text.toString().trim()
+            if (chipText.isNotEmpty()) {
+                addChip(msgPinkTime, chipText)
+                newMsgTimeInput.text.clear()
+            }
+        }
+        addReasonChipBtn.setOnClickListener {
+            val chipText = newMsgReasonInput.text.toString().trim()
+            if (chipText.isNotEmpty()) {
+                addChip(msgPinkWhy, chipText)
+                newMsgReasonInput.text.clear()
+            }
         }
     }
 
