@@ -7,25 +7,29 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/duck"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="20dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="541dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="60dp">
 
         <Button
             android:id="@+id/CreateBtn"
             android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:text="새 메시지 생성" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="295dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
+            android:text="새 메시지 생성"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/ViewBtn"
@@ -33,16 +37,7 @@
             android:layout_height="wrap_content"
 
             android:text="생성된 메시지 보기" />
-
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="309dp"
-        android:layout_gravity="bottom"
-
-        android:scaleX="2"
-        android:scaleY="2"
-        android:src="@drawable/duck" />
 
 </FrameLayout>
