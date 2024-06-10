@@ -11,7 +11,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.sosal.pingduck.common.MsgGenerator
 import com.sosal.pingduck.msgDB.DBHelper
+import com.sosal.pingduck.msgDB.DBOptionHelper
 import com.sosal.pingduck.msgDB.MsgDTO
+import com.sosal.pingduck.msgDB.OptionTag
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -31,6 +33,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
 
     //DB 객체 선언
     lateinit var dbHelper : DBHelper
+    lateinit var optionHelper: DBOptionHelper
 
     //msgGenerator
     lateinit var msgGenerator: MsgGenerator
@@ -45,6 +48,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         dbHelper = DBHelper(this)
+        optionHelper = DBOptionHelper(this)
 
         //view binding
         setContentView(R.layout.activity_new_msg)
@@ -71,6 +75,18 @@ class CreateNewMsgActivity : AppCompatActivity() {
         //msgGenerator
         msgGenerator = MsgGenerator()
 
+        //TODO : 첫 기본 옵션 넣기 부분 구현해야함
+        /*
+        optionHelper.createOption("교수님",OptionTag.MSGTARGET)
+        optionHelper.createOption("선배",OptionTag.MSGTARGET)
+        optionHelper.createOption("후배",OptionTag.MSGTARGET)
+        optionHelper.createOption("내일",OptionTag.MSGPINKTIME)
+        optionHelper.createOption("다음생",OptionTag.MSGPINKTIME)
+        optionHelper.createOption("아픔",OptionTag.MSGPINKWHY)
+        optionHelper.createOption("금붕어산책",OptionTag.MSGPINKWHY)
+
+        /*
+         */
         addChip(msgTarget,"교수님")
         addChip(msgTarget,"선배")
         addChip(msgTarget,"후배")
@@ -79,6 +95,16 @@ class CreateNewMsgActivity : AppCompatActivity() {
         addChip(msgPinkWhy,"아픔")
         addChip(msgPinkWhy,"금붕어산책")
         addChip(msgPinkWhy,"모기 사냥")
+        */
+        for(s:String in optionHelper.getOption(OptionTag.MSGTARGET)){
+            addChip(msgTarget,s)
+        }
+        for(s:String in optionHelper.getOption(OptionTag.MSGPINKTIME)){
+            addChip(msgPinkTime,s)
+        }
+        for(s:String in optionHelper.getOption(OptionTag.MSGPINKWHY)){
+            addChip(msgPinkWhy,s)
+        }
 
         createBtn.setOnClickListener {
             try {
@@ -109,6 +135,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
         addTargetChipBtn.setOnClickListener {
             val chipText = newMsgTargetInput.text.toString().trim()
             if (chipText.isNotEmpty()) {
+                optionHelper.createOption(chipText,OptionTag.MSGTARGET)
                 addChip(msgTarget, chipText)
                 newMsgTargetInput.text.clear()
             }
@@ -116,6 +143,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
         addTimeChipBtn.setOnClickListener {
             val chipText = newMsgTimeInput.text.toString().trim()
             if (chipText.isNotEmpty()) {
+                optionHelper.createOption(chipText,OptionTag.MSGPINKTIME)
                 addChip(msgPinkTime, chipText)
                 newMsgTimeInput.text.clear()
             }
@@ -123,6 +151,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
         addReasonChipBtn.setOnClickListener {
             val chipText = newMsgReasonInput.text.toString().trim()
             if (chipText.isNotEmpty()) {
+                optionHelper.createOption(chipText,OptionTag.MSGPINKWHY)
                 addChip(msgPinkWhy, chipText)
                 newMsgReasonInput.text.clear()
             }
