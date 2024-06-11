@@ -100,4 +100,13 @@ class DBOptionHelper(context: Context?, name: String?="optiondb",
 
     }
 
+    fun delOption(text: String){
+        val db = this.writableDatabase
+        val whereClause = "optionname = ?"
+        val whereArgs = arrayOf(text)
+        db.delete("optiontable",whereClause,whereArgs)
+        db.close()
+        Log.d("DB","delete ${text}")
+    }
+
 }

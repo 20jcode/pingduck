@@ -75,27 +75,23 @@ class CreateNewMsgActivity : AppCompatActivity() {
         //msgGenerator
         msgGenerator = MsgGenerator()
 
-        //TODO : 첫 기본 옵션 넣기 부분 구현해야함
-        /*
-        optionHelper.createOption("교수님",OptionTag.MSGTARGET)
-        optionHelper.createOption("선배",OptionTag.MSGTARGET)
-        optionHelper.createOption("후배",OptionTag.MSGTARGET)
-        optionHelper.createOption("내일",OptionTag.MSGPINKTIME)
-        optionHelper.createOption("다음생",OptionTag.MSGPINKTIME)
-        optionHelper.createOption("아픔",OptionTag.MSGPINKWHY)
-        optionHelper.createOption("금붕어산책",OptionTag.MSGPINKWHY)
 
-        /*
-         */
-        addChip(msgTarget,"교수님")
-        addChip(msgTarget,"선배")
-        addChip(msgTarget,"후배")
-        addChip(msgPinkTime,"내일")
-        addChip(msgPinkTime,"다음생")
-        addChip(msgPinkWhy,"아픔")
-        addChip(msgPinkWhy,"금붕어산책")
-        addChip(msgPinkWhy,"모기 사냥")
-        */
+        //init
+        if(optionHelper.getOption(OptionTag.MSGTARGET).isEmpty()){
+            optionHelper.createOption("교수님",OptionTag.MSGTARGET)
+            optionHelper.createOption("선배",OptionTag.MSGTARGET)
+            optionHelper.createOption("후배",OptionTag.MSGTARGET)
+        }
+        if(optionHelper.getOption(OptionTag.MSGPINKTIME).isEmpty()){
+            optionHelper.createOption("내일",OptionTag.MSGPINKTIME)
+            optionHelper.createOption("다음생",OptionTag.MSGPINKTIME)
+        }
+        if(optionHelper.getOption(OptionTag.MSGPINKWHY).isEmpty()){
+            optionHelper.createOption("아픔",OptionTag.MSGPINKWHY)
+            optionHelper.createOption("금붕어산책",OptionTag.MSGPINKWHY)
+
+        }
+
         for(s:String in optionHelper.getOption(OptionTag.MSGTARGET)){
             addChip(msgTarget,s)
         }
@@ -184,6 +180,7 @@ class CreateNewMsgActivity : AppCompatActivity() {
             isCheckable = true
             setOnCloseIconClickListener {
                 chipGroup.removeView(this)
+                optionHelper.delOption(this.text.toString())
             }
         })
     }
